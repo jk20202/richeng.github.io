@@ -5,13 +5,13 @@ body {
     align-items: center;
     height: 100vh; /* 修改为100vh，使高度与视口一致 */
 	width: 80vh;
-    margin: 0;
+    margin: 2px;
     overflow-y: hidden; /* 隐藏垂直方向溢出 */
     background-color: #f0f0f0;
 }
 
 #calendar {
-    width: 600px; /* Increased width for better layout */
+    width: 550px; /* Increased width for better layout */
     background-color: white;
     padding: 20px;
     border-radius: 10px;
@@ -51,8 +51,8 @@ body {
 
 #dates {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    grid-template-columns: repeat(7, 0.1fr);
+    gap: 10px; /* 调整为更小的间距，比如2px */
 }
 
 span {
@@ -60,10 +60,12 @@ span {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 80px;
-    height: 70px;
+    width: 70px;
+    height: 60px;
     border: 1px solid #ddd;
     box-sizing: border-box;
+	/* margin: -1px; /* 添加间距 */ */
+	
 }
 
 .day-number {
@@ -81,10 +83,17 @@ span {
     text-align: center;
 }
 
+.selected {
+    background-color: green;
+    color: white; /* Optionally change text color for better visibility */
+}
+
+
 #weekdays {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
+    display: grid;
+    grid-template-columns: repeat(7, 0.1fr);
+    gap: 10px; /* 调整为更小的间距，比如2px */
+	font-weight: bold; /* 添加字体加粗 */
 }
 
 #currentTime {
