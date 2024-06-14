@@ -1,4 +1,4 @@
-const baseEvents = [ '休息1', '休息2','白班1', '白班2','夜班1', '夜班2'];
+const baseEvents = ['休息1', '休息2', '白班1', '白班2', '夜班1', '夜班2'];
 let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth() + 1;
 
@@ -34,6 +34,15 @@ function drawCalendar(year, month) {
 
         dateSpan.appendChild(dayNumber);
         dateSpan.appendChild(eventText);
+
+        dateSpan.addEventListener('click', () => {
+            // Remove 'selected' class from all dateSpans
+            const allDateSpans = datesDiv.querySelectorAll('span');
+            allDateSpans.forEach(span => span.classList.remove('selected'));
+
+            // Add 'selected' class to the clicked dateSpan
+            dateSpan.classList.add('selected');
+        });
 
         const today = new Date();
         if (year === today.getFullYear() && month === today.getMonth() + 1 && day === today.getDate()) {
@@ -91,6 +100,47 @@ function updateTime() {
     const now = new Date();
     currentTimeLabel.textContent = now.toLocaleTimeString('zh-CN', { hour12: false });
 }
+
+// 添加触摸事件处理函数
+let startX;
+const datesDiv = document.getElementById('dates');
+
+datesDiv.addEventListener('touchstart', (event) => {
+    startX = event.touches[0].clientX;
+}, false);
+
+datesDiv.addEventListener('touchmove', (event) => {
+    if (!startX) {
+        return;
+    }
+
+    const moveX = event.touches[0].clientX;
+    const diffX = startX - moveX;
+
+    if (diffX > 50) {
+        // 左滑，下一月
+        currentMonth++;
+        if (currentMonth > 12) {
+            currentMonth = 1;
+            currentYear++;
+        }
+        drawCalendar(currentYear, currentMonth);
+        startX = null;
+    } else if (diffX < -50) {
+        // 右滑，上一月
+        currentMonth--;
+        if (currentMonth < 1) {
+            currentMonth = 12;
+            currentYear--;
+        }
+        drawCalendar(currentYear, currentMonth);
+        startX = null;
+    }
+}, false);
+
+datesDiv.addEventListener('touchend', () => {
+    startX = null;
+}, false);
 
 drawCalendar(currentYear, currentMonth);
 updateTime();
