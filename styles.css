@@ -61,6 +61,11 @@ body {
     background-color: yellow;
 }
 
+/* 添加可以选取某一天的日期*/
+.selected {
+    background-color: green;
+    color: white; 
+}
 
 #dates {
     display: flex;
