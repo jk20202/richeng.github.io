@@ -4,15 +4,15 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh; /* 修改为100vh，使高度与视口一致 */
-	width: 80vh;
-    margin: 2px;
+    width: 80vh; /* 设置宽度为视口高度的80% */
+    margin: 0;
     overflow-y: hidden; /* 隐藏垂直方向溢出 */
     background-color: #f0f0f0;
 }
 
 #calendar {
-	position: relative; /* 添加相对定位 */
-    width: 550px; /* Increased width for better layout */
+    position: relative; /* 添加相对定位 */
+    width: 600px; /* 增加宽度以获得更好的布局 */
     background-color: white;
     padding: 20px;
     border-radius: 10px;
@@ -27,44 +27,45 @@ body {
 }
 
 #monthYear {
-    font-size: 3em; /* Reduced font size */
-	padding: 8px 12px;
-	
+    font-size: 3em; /* 调整字体大小 */
+    padding: 8px 12px;
+	font-weight: bold;/* 加粗字体 */
 }
 
-#goToday {
-    font-size: 18px;
-    padding: 8px 12px;
-	background-color: yellow;
-    /* margin-left: 10px; /* 增加左侧间距 */ */
+#prevMonth, #nextMonth, #goToday {
+    padding: 6px 12px; /* 增大内边距以增加按钮尺寸 */
+    border: none;
+    border-radius: 18px; /* 圆角使按钮看起来更柔和 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加轻微阴影增加立体感 */
+    font-size: 20px; /* 根据需要调整字体大小 */
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* 平滑的过渡效果 */
+    width: 100px; /* 或者设置固定宽度，根据需要调整 */
+    height: 50px; /* 或者设置固定高度，根据需要调整 */
+}
+
+#prevMonth:hover, #nextMonth:hover, #goToday:hover {
+    transform: translateY(-2px); /* 悬停时向上移动按钮 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 悬停时增强阴影效果 */
 }
 
 #prevMonth {
-    font-size: 18px;
-    padding: 8px 12px;
-	background-color: aliceblue;
-    /* margin-left: 10px; /* 增加左侧间距 */ */
+    background-color: aliceblue;
 }
 
 #nextMonth {
-    font-size: 18px;
-    padding: 8px 15px;
-	background-color: #93bebb;
-    /* margin-left: 10px; /* 增加左侧间距 */ */
+    background-color: #93bebb;
 }
 
-#buttons-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px; /* 调整顶部间距 */
-	
+#goToday {
+    background-color: yellow;
 }
 
 
 #dates {
-    display: grid;
-    grid-template-columns: repeat(7, 0.1fr);
-    gap: 10px; /* 调整为更小的间距，比如2px */
+    display: flex;
+    flex-wrap: wrap; /* 使用flex布局并允许换行 */
+    gap: 5px;
 }
 
 span {
@@ -72,49 +73,46 @@ span {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 70px;
-    height: 60px;
+    flex: 1 0 13%; /* 每个日期单元格占据父容器的约13%，保证7列布局 */
+    min-width: 40px; /* 设置最小宽度，防止过小 */
+    height: 70px;
     border: 1px solid #ddd;
     box-sizing: border-box;
-	/* margin: -1px; /* 添加间距 */ */
-	
+}
+
+#buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* 调整顶部间距 */
 }
 
 .day-number {
     font-weight: bold;
-	font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 .event-text {
     font-size: 1em;
-    color: #55aaff; /* Text color */
-    background-color: transparent; /* Remove background color */
+    color: #55aaff; /* 文本颜色 */
+    background-color: transparent; /* 移除背景颜色 */
     padding: 2px;
     border-radius: 3px;
-    width: 100%; /* Make event text fill the width */
+    width: 100%; /* 使事件文本填满宽度 */
     text-align: center;
 }
 
-.selected {
-    background-color: green;
-    color: white; /* Optionally change text color for better visibility */
-}
-
-
 #weekdays {
-    display: grid;
-    grid-template-columns: repeat(7, 0.1fr);
-    gap: 10px; /* 调整为更小的间距，比如2px */
-	font-weight: bold; /* 添加字体加粗 */
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+	font-weight: bold;/* 加粗字体 */
 }
 
 #currentTime {
-    font-size: 3em; /* Adjusted font size */
+    font-size: 3em; /* 调整字体大小 */
     font-weight: bold;
     color: black;
-    /* background-color: blue; */
     padding: 19px 12px;
-    /* border-radius: 5px; */
 }
 
 .today {
@@ -124,4 +122,50 @@ span {
 
 .inactive {
     color: gray;
+}
+
+/* 针对移动设备的媒体查询 */
+@media screen and (max-width: 600px) {
+    body {
+        width: 100vw; /* 占满视口的宽度 */
+        height: auto; /* 自动高度以适应内容 */
+    }
+
+    #calendar {
+        width: 100%; /* 父容器的全宽 */
+        padding: 10px; /* 较小屏幕的较少填充 */
+    }
+
+    #monthYear {
+        font-size: 2em; /* 调整移动端的字体大小 */
+    }
+
+    #goToday,
+    #prevMonth,
+    #nextMonth {
+        font-size: 16px; /* 调整按钮的字体大小 */
+        padding: 6px 10px; /* 调整按钮的填充 */
+    }
+
+    #dates {
+        gap: 2px; /* 减小日期之间的间距 */
+    }
+
+    span {
+        flex: 1 0 13%; /* 确保在小屏幕上保持七列 */
+        min-width: 30px; /* 调整最小宽度以适应更小的屏幕 */
+        height: 60px; /* 较小屏幕的较小高度 */
+    }
+
+    .day-number {
+        font-size: 1.2em; /* 调整移动端的日期数字字体大小 */
+    }
+
+    .event-text {
+        font-size: 0.8em; /* 调整移动端的事件文本字体大小 */
+    }
+
+    #currentTime {
+        font-size: 2em; /* 调整移动端的当前时间字体大小 */
+    }
 }
